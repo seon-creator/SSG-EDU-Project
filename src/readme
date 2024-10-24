@@ -1,0 +1,21 @@
+# Frontend Structure
+data: 카테고리로 필요한 정보 저장
+    - cities.js: 도시별 구 목록 정리
+
+image: 웹 아이콘 및 background
+    - hospital.png: 병원 아이콘
+    - paramedic.png: 구급차 아이콘
+    - landingpage.png: 랜딩 페이지 배경이미지
+
+pages: 웹 페이지 정보
+    - EnterInfoPage.jsx: 환자 주소, 상태 정보 입력
+    - LandingPage.jsx: 웹서비스 시작 페이지
+    - LoginPage.jsx: 로그인 페이지
+    - ShowStatusPage.jsx: 환자 주소, 상태 정보 보여줌
+    - SignUpPage.jsx: 회원가입 페이지
+
+utils: JWT토큰 관련, 보안관리
+    - auth.js: JWT토큰 저장, 불러오기, 삭제 함수
+    - ProtectedRoute.jsx: 로그인한 상태에서만 접속 가능하게 하는 보호 기능
+
+App.js: 프론트엔드 전 페이지 관리

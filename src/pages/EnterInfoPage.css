@@ -1,0 +1,110 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.landing-container {
+  display: flex;
+  align-items: center;  /* Set content position to center */
+  justify-content: center; /* Set container position to center */
+  height: 100vh;  /* Show 100% height with browser */
+  background-size: cover; /* Cover the entire background */
+  background-position: center;  /* Set the background img position center */
+}
+
+.EnterInfo-content {  /* Box of entering city, district, symptoms info */
+  background-color: white; /* Slight opacity for readability */
+  padding: 50px;
+  border-radius: 10px;  /* 모서리 부분 둥글게 */
+  max-height: 700px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.EnterInfo-content-title {
+  font-size: 2rem;
+  color: #00254d;
+  margin-bottom: 40px;
+}
+
+.patient-info-form {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 5px;
+  gap: 15px;
+}
+
+.address-group {
+  display: flex;
+  justify-content: row;
+  gap: 20px; /* 요소들 간의 간격 */
+}
+
+.city-input-pair,
+.dis-input-pair,
+.detail-input-pair {
+  display: flex;
+  flex-direction: column; /* 라벨과 입력 필드를 세로로 배치 */
+  flex-grow: 1; /* 세부주소 입력 필드는 flex-grow로 영역을 차지 */
+}
+
+.city-input-pair label,
+.dis-input-pair label,
+.detail-input-pair label {
+  margin-bottom: 5px; /* 라벨과 입력 필드 사이의 간격 */
+}
+
+.city-input-pair select,
+.dis-input-pair select,
+.detail-input-pair input {
+  padding: 15px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  /* width: 100%; */
+}
+
+.detail-input-pair input {
+  flex-grow: 1; /* 세부주소 입력 필드가 남은 영역을 차지 */
+}
+
+.address-group textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.symptoms-input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.symptoms-input-group textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: none;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}

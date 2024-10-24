@@ -1,0 +1,122 @@
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.signup-input-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.signup-input-container h1 {
+  margin-bottom: 10px;
+  color: black;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.signup-input-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.signup-input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 100%;
+}
+
+.signup-input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.input-and-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px; /* 요소 간 5px 간격 */
+}
+
+.input-and-button input {
+  flex: 8; /* 길이 비율 8 */
+  padding: 12px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.input-and-button button {
+  flex: 2; /* 길이 비율 2 */
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.input-and-button button:hover {
+  background-color: #0056b3;
+}
+
+.signup-input-container input {
+  width: 100%;
+  padding: 12px 12px 12px 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.signup-input-container input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.signup-input-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.signup-input-container button:hover {
+  background-color: #0056b3;
+}
+
+.username-check-message {
+  color: #007bff;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.username-check-message.error {
+  color: red;
+}

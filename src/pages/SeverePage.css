@@ -1,0 +1,58 @@
+/* 전체 페이지 컨테이너 */
+.severe-diagnosis-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* 제목 스타일 */
+  .page-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* 부제목 스타일 */
+  .page-subtitle {
+    font-size: 1.2rem;
+    color: #777;
+    margin-bottom: 40px;
+  }
+  
+  /* 응급실 목록 컨테이너 */
+  .emergency-room-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* 응급실 카드 스타일 */
+  .emergency-room-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .emergency-room-card:hover {
+    transform: scale(1.02);
+  }
+  
+  /* 응급실 이름 스타일 */
+  .emergency-room-name {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  /* 응급실 세부 정보 스타일 */
+  .emergency-room-details {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+  }
