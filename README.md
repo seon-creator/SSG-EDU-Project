@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+# 응급 환자 이송을 돕기 위한 웹서비스 프로젝트
+- 프로젝트 기간: 10/1 ~ 11/29
+- 방향성: 구급대원, 병원 간 신속한 환자 상태 확인 웹서비스
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 사용 AI
+- Chat GPT(환자상태요약 및 분류)
+- 시간예측모델
+- 음성->text 변환모델
 
-## Available Scripts
+## 데이터
+- 응급실 실시간 가용병상 정보 데이터
+- 구급차 출동시간 마감시간 데이터(울산)
 
-In the project directory, you can run:
+## 사용 API
+- Chat GPT
+- 지도
 
-### `npm start`
+## 사용방식
+- 구급대원
+1. 환자발생 주소 입력
+2. 환자 상태 텍스트 입력 (음성 파일로 넣을 수도 있음)
+3. GPT가 환자 상태를 판단해 중증 단계, 상태를 요약해서 정리해줌
+4. 추천 병원 목록 확인
+5. 병원 클릭 시 해당 병원으로 응급환자 요청이 완료되었다는 메시지
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 병원
+1. 응급환자 요청 건 확인
+2. 목록: 중증도 상태 | 예상도착시간
+3. 응급환자 요청 건 클릭
+4. 환자 상태 요약정보, 예상환자 도착시간 보여주기
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 설치 모듈
+npm install axios
