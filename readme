@@ -30,7 +30,4 @@ server.js: 백엔드 서버 실행 코드
 - 백엔드 코드 정상실행을 위해 입력해야 할 설치 명령어
 npm install bcryptjs jsonwebtoken mongoose dotenv
 npm install express cors
-
-- BERT 모델 사용을 위해 설치한 할
-npm install @tensorflow/tfjs @tensorflow/tfjs-node bert-tokenizer
 npm install axios
