@@ -31,7 +31,7 @@ server.js: 백엔드 서버 실행 코드
 npm install bcryptjs jsonwebtoken mongoose dotenv
 npm install express cors
 
-- BERT 모델 사용을 위해 설치한 할
+- BERT 모델 사용을 위해 설치
 npm install @tensorflow/tfjs @tensorflow/tfjs-node bert-tokenizer
 npm install axios
 
@@ -53,3 +53,5 @@ If you need to have openjdk@17 first in your PATH, run:
 
 For compilers to find openjdk@17 you may need to set:
   export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
+=======
+
