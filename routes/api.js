@@ -4,7 +4,6 @@ const { isAuthenticated } = require('../middleware/auth');
 
 const router = express.Router();
 
-// router.post('/predict-severe', isAuthenticated, predictSevere); // 경증/중증 분류
 router.get('/getEmergencyInfo', isAuthenticated, getEmergencyInfo);
 
 module.exports = router;

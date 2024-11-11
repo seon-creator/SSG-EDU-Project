@@ -5,7 +5,7 @@ const connectDB = require('./config/db');
 
 dotenv.config();
 
-const FRONTEND_URL = 'http://localhost:3000'
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 // MongoDB 연결
 connectDB();

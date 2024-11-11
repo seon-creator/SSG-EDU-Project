@@ -6,25 +6,25 @@ const reportSchema = new mongoose.Schema({
     ref: 'User',  // User 스키마의 ObjectID 참조
     required: true,
   },
-  patientLocation: {
+  patientLocation: {  // 환자의 위치 정보
     type: String,
-    required: true,  // 환자의 위치 정보
+    required: true,
   },
   desination: {   //  목적지
     type: String,
     required: false
   },
-  symptom: {
+  symptom: {      // 증상 설명
     type: String,
-    required: true,  // 증상 설명
+    required: true,  
   },
-  isSevere: {
+  isSevere: {     // 중증 여부
     type: Boolean,
-    required: false,  // 중증 여부
+    required: false,
   },
-  isCreated: {
+  isCreated: {    // 생성일 (기본값: 현재 시간)
     type: Date,
-    default: Date.now,  // 생성일 (기본값: 현재 시간)
+    default: Date.now,  
   }
 });
 

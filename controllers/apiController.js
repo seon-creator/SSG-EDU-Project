@@ -1,6 +1,10 @@
+const { spawn } = require('child_process');   // Python 스크립트 실행 순서 지정
+const path = require('path');   // 경로 불러오기
+const os = require('os'); // 운영체제 감지를 위해 os 모듈 사용
 const axios = require('axios'); // http 통신
 require('dotenv').config(); // 환경변수 내용 불러오기
 
+// 응급실 정보 조회 API키
 const API_KEY = process.env.EMERGENCY_ROOM_API_KEY;
 
 // 응급실 정보 조회 함수
