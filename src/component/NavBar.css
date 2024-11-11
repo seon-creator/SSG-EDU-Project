@@ -1,53 +1,38 @@
 .navbar {
-  background-color: #f0f2f5; /* 로그인 페이지의 배경색과 일치 */
-  color: #007bff;
-  padding: 15px;
+  background-color: #f0f8ff; /* 랜딩 페이지 배경색과 조화되는 색상 */
+  width: 100%;
+  gap: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #007bff; /* 상단 경계선 추가 */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 메뉴바 그림자 */
+  border-bottom: 2px solid #cbd1d9;
 }
 
-.navbar-logo h1 {
-  margin: 0;
-  color: #007bff;
+.navbar-logo-image {
+  width: 250px;  /* 원하는 크기로 설정 */
+  height: auto;
 }
 
 .navbar-menu {
   list-style-type: none;
   display: flex;
-  gap: 20px;
-}
-
-.navbar-menu li {
-  display: inline;
-}
-
-.navbar-menu li a, .navbar-menu li button {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.navbar-menu li a:hover, .navbar-menu li button:hover {
-  color: #0056b3;
-  text-decoration: underline;
+  padding: 15px;
+  gap: 30px;
 }
 
 .navbar-button {
-  background-color: transparent;
+  padding: 10px 25px;
+  font-size: 20px;
+  color: white;
+  background-color: #007bff;
   border: none;
-  font-weight: bold;
+  border-radius: 25px; /* 둥근 모서리 */
   cursor: pointer;
-  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
 }
 
 .navbar-button:hover {
-  color: #0056b3;
-  text-decoration: underline;
+  background-color: #0056b3;
 }

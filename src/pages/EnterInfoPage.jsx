@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // useNavigate import
 import { getToken } from '../utils/auth'; // For send user id
-import landingpageImage from '../image/landingpage.png';
 import { cities } from '../data/cities'; // cities 데이터 import
 import NavBar from '../component/NavBar';  // 상단 메뉴바
 import './EnterInfoPage.css';
@@ -17,6 +16,7 @@ const EnterInfoPage = () => {
   const [symptoms, setSymptoms] = useState(''); // 증상 입력 필드
 
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate
+  const isFormValid = selectedCity && selectedDistrict && details && symptoms;  // 버튼 활성화 목적
 
   // 도시 선택 핸들러
   const handleCityChange = (event) => {
@@ -72,12 +72,8 @@ const EnterInfoPage = () => {
   return (
     <div>
       <NavBar />
-    <div
-      className="landing-container"
-      style={{ backgroundImage: `url(${landingpageImage})` }}
-    >
+    <div className="EnterInfo-container">
       {/* NavBar 추가 */}
-      
       <div className="EnterInfo-content">
         <h1 className="EnterInfo-content-title">신속한 환자 상태 분류 및 병원 추천</h1>
 
@@ -131,7 +127,11 @@ const EnterInfoPage = () => {
               onChange={(e) => setSymptoms(e.target.value)}></textarea>
           </div>
 
-          <button type="submit" className="btn submit-btn">정보 등록</button>
+          <button 
+            type="submit" 
+            className={`btn submit-btn ${!isFormValid ? 'disabled' : ''}`}
+            disabled={!isFormValid}
+            >정보 등록</button>
         </form>
 
       </div>

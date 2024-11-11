@@ -1,16 +1,13 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
-.landing-container {
+.EnterInfo-container {
   display: flex;
   align-items: center;  /* Set content position to center */
   justify-content: center; /* Set container position to center */
-  height: 100vh;  /* Show 100% height with browser */
-  background-size: cover; /* Cover the entire background */
-  background-position: center;  /* Set the background img position center */
+  height: 80vh;  /* Show 100% height with browser */
 }
 
 .EnterInfo-content {  /* Box of entering city, district, symptoms info */
@@ -20,13 +17,14 @@ body {
   max-height: 700px;
   max-width: 600px;
   width: 100%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ddd; /* Add border with color */
 }
 
 .EnterInfo-content-title {
-  font-size: 2rem;
+  font-size: 2.3rem;
   color: #00254d;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 
 .patient-info-form {
@@ -35,7 +33,7 @@ body {
   font-size: 1rem;
   color: #666;
   margin-bottom: 5px;
-  gap: 15px;
+  gap: 20px;
 }
 
 .address-group {
@@ -56,6 +54,7 @@ body {
 .dis-input-pair label,
 .detail-input-pair label {
   margin-bottom: 5px; /* 라벨과 입력 필드 사이의 간격 */
+  font-size: 18px;
 }
 
 .city-input-pair select,
@@ -86,6 +85,11 @@ body {
   text-align: left;
 }
 
+.symptoms-input-group label {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
 .symptoms-input-group textarea {
   padding: 10px;
   font-size: 1rem;
@@ -105,6 +109,12 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.submit-btn:hover {
+.submit-btn.disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.submit-btn:not(.disabled):hover {
   background-color: #0056b3;
 }

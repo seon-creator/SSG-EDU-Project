@@ -8,10 +8,11 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const SeverePage = () => {
   const location = useLocation();
-  const { address } = location.state || {}; // navigate로 받은 state에서 address 추출
+  const { address, status_str } = location.state || {}; // navigate로 받은 state에서 address 추출
   const [emergencyRooms, setEmergencyRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  console.log(status_str);
 
   // 주소를 ' '로 분리하여 도시(stage1), 구(stage2) 추출
   const [stage1, stage2] = address ? address.split(' ').slice(0, 2) : ['', ''];

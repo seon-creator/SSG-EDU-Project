@@ -1,0 +1,81 @@
+.report-list-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .report-list-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .sort-buttons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .sort-buttons button {
+    padding: 8px 16px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sort-buttons button.active {
+    background-color: #ddd;
+    font-weight: bold;
+  }
+  
+  .sort-buttons button:hover {
+    background-color: #e1e1e1;
+  }
+  
+  .city-district-filters label {
+    margin-right: 8px;
+  }
+  
+  .city-district-filters select {
+    padding: 8px;
+    margin-right: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .report-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  
+  .report-card {
+    background-color: #f9f9f9;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .report-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .report-card p {
+    margin: 8px 0;
+  }
