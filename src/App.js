@@ -12,7 +12,7 @@ import EnterInfoPage from './pages/EnterInfoPage';
 import ShowStatusPage from './pages/ShowStatusPage';
 import SeverePage from './pages/SeverePage';
 import RecommendationPage from './pages/recommend/RecommendationPage';
-// import NotSeverePage from './pages/NotSeverePage';
+import RouteguidancePage from './pages/RouteguidancePage';
 import './App.css';
 
 import LandingPage from './pages/LandingPage';
@@ -33,16 +33,9 @@ function App() {
           {/* 로그인 상태에서만 접속 가능 */}
           <Route path="/enterInfo" element={<ProtectedRoute element={EnterInfoPage} />} />    {/* 환자 주소 및 증상 정보를 입력 */}
           <Route path="/patient-status" element={<ProtectedRoute element={ShowStatusPage} />} />  {/* 환자 주소,증상 정보 분류 모델을 실행 */}
-          <Route path="/patient-status/Severe" element={<ProtectedRoute element={SeverePage} />} />  {/* 중증 환자 페이지 */}
-          <Route 
-                    path="/patient-status/mild" 
-                    element={
-                        <RecommendationPage 
-                            recommendedDepartment='진단 결과 없음' 
-                            diagnosisResult='진단 결과 없음'
-                        />
-                    } 
-                />
+          <Route path="/patient-status/Severe" element={<ProtectedRoute element={SeverePage} />} /> {/* 중증 환자 페이지 */}
+          <Route path="/patient-status/mild" element={<ProtectedRoute element={RecommendationPage} />} /> {/* 경증 환자 페이지 */}
+          <Route path="/route/guide" element={<ProtectedRoute element={RouteguidancePage} />} />  {/* 경로 안내 및 소요시간 예측 */}
 
           <Route path="/report-list" element={<ProtectedRoute element={ReportListPage} />} /> {/* 신고 목록 조회 */}
           <Route path="/report-list/:id" element={<ProtectedRoute element={ReportDetailPage} />} /> {/* 특정 신고 내용 */}

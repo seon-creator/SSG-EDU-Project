@@ -7,7 +7,7 @@ body {
   display: flex;
   align-items: center;  /* Set content position to center */
   justify-content: center; /* Set container position to center */
-  height: 80vh;  /* Show 100% height with browser */
+  height: 100vh;  /* Show 100% height with browser */
 }
 
 .EnterInfo-content {  /* Box of entering city, district, symptoms info */
@@ -19,6 +19,7 @@ body {
   width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 2px solid #ddd; /* Add border with color */
+  transform: translateY(-100px); /* 30px 위로 이동 */
 }
 
 .EnterInfo-content-title {

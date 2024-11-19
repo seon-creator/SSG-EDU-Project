@@ -41,7 +41,6 @@ const EnterInfoPage = () => {
     const token = getToken();
   
     const address = `${selectedCity} ${selectedDistrict} ${details}`.trim();
-    const status_str = symptoms;
   
     try {
       const response = await fetch(`${BACKEND_URL}/report/create`, {
@@ -52,14 +51,14 @@ const EnterInfoPage = () => {
         },
         body: JSON.stringify({
           patientLocation: address,
-          symptom: status_str,
+          symptom: symptoms,
         }),
       });
   
       const data = await response.json();
       if (response.ok) {
         alert('Report가 성공적으로 생성되었습니다.');
-        navigate('/patient-status', { state: { address, status_str } });
+        navigate('/patient-status', { state: { address, symptoms } });
       } else {
         alert(data.message || 'Report 생성 실패');
       }

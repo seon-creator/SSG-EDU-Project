@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getToken } from '../utils/auth';
 import NavBar from '../component/NavBar';  // 상단 메뉴바
 import './ShowStatusPage.css'; // 스타일을 위한 CSS 파일 import
 
 // 환경 변수에서 백엔드 URL 가져오기
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const FLASK_URL = process.env.REACT_APP_FLASK_URL;
 
 const ShowStatusPage = () => {
   const location = useLocation();
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅
-  const { address, status_str } = location.state || {}; // 전달된 state에서 address와 status_str을 추출
+  const { address, symptoms } = location.state || {}; // 전달된 state에서 address와 symptoms을 추출
   const [isLoading, setIsLoading] = useState(false);  // 버튼의 로딩 상태 관리
 
   // BERT 모델을 호출하는 백엔드 메서드 호출
   const handleCheck = async (e) => {
     e.preventDefault();
-    const token = getToken();
     setIsLoading(true); // 검사 시작 시 로딩 상태로 설정
 
     try {
@@ -25,7 +22,7 @@ const ShowStatusPage = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-            symptoms: status_str
+            symptoms: symptoms
         })
       });
       console.log("요청을 보냄");
@@ -35,10 +32,9 @@ const ShowStatusPage = () => {
       if (response.ok) {
         // 응답이 '중증'일 경우 Severe 페이지로, 그렇지 않으면 notSevere 페이지로 이동
         if (data.result === '중증') {
-          navigate('/patient-status/Severe', { state: { address } });
+          navigate('/patient-status/Severe', { state: { address, symptoms } });
         } else {
-          
-          navigate('/patient-status/mild', { state: { result } });
+          navigate('/patient-status/mild', { state: { symptoms, address} });
         }
       } else {
         alert('응답이 올바르지 않음');
@@ -55,15 +51,16 @@ const ShowStatusPage = () => {
       <NavBar />
       <div className="status-container">
         <form className="status-form" onSubmit={handleCheck}>
-          <h1>응급환자 중증/경증 분류</h1>
+          <h1>증상 진단 검사하기</h1>
+          <h3>* 10,000개 이상의 중증/경증 분류 데이터를 기반으로 학습된 인공지능을 사용해 검사합니다.</h3>
           <div className="status-info-wrapper"> {/* 주소와 환자 증상을 묶는 컨테이너 */}
             <div className="input-group">
-              <label><strong>주소:</strong></label>
+              <label><strong>1. 주소</strong></label>
               <p>{address}</p>
             </div>
             <div className="input-group">
-              <label><strong>환자 증상:</strong></label>
-              <p>{status_str}</p>
+              <label><strong>2. 증상</strong></label>
+              <p>{symptoms}</p>
             </div>
           </div>
 

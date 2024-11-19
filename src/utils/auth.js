@@ -2,6 +2,10 @@
 export const setToken = (token) => {
     sessionStorage.setItem('token', token);
 };
+
+export const refreshToken = (newToken) => {
+  sessionStorage.refreshToken('token', newToken);
+}
   
 export const getToken = () => {
   return sessionStorage.getItem('token');

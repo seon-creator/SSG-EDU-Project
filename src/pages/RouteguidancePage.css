@@ -1,0 +1,93 @@
+/* 전체 페이지 스타일 */
+.Routeguidance-Page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  background-color: #f0f8ff;
+}
+
+.Route-guidance-container {
+  display: flex;
+  flex-direction: column; /* 세로로 정렬 */
+  justify-content: center; /* 세로 방향 가운데 정렬 */
+  align-items: center; /* 가로 방향 가운데 정렬 */
+  width: 100%;
+  height: 100%; /* 컨테이너가 부모 높이를 채우도록 설정 */
+  max-width: 1200px;
+  gap: 10px; /* 각 요소 사이의 간격 */
+  margin: 0 auto; /* 컨테이너를 화면 가운데로 정렬 */
+}
+
+/* 제목 스타일 */
+.Routeguidance-Page h1 {
+  font-size: 2rem;
+  color: #333;
+}
+
+/* 정보 박스 스타일 */
+.info-box {
+  width: 100%;
+  max-width: 600px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* 목록 스타일 */
+.info-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 목록 항목 스타일 */
+.info-box li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.info-box li:last-child {
+  border-bottom: none;
+}
+
+/* 제목 텍스트 스타일 */
+.info-title {
+  font-weight: bold;
+  font-size: 18px;
+  color: #555;
+  flex: 1;
+}
+
+/* 내용 텍스트 스타일 */
+.info-content {
+  text-align: right;
+  font-size: 17px;
+  color: #000;
+  flex: 2;
+}
+
+/* 지도 컨테이너 스타일 */
+.mapContainer {
+  width: 100%;
+  max-width: 900px;
+  height: calc(100vh - 300px); /* 상단 여백과 정보를 제외한 나머지 공간 사용 */
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+/* 지도 캔버스 */
+.mapContainer canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: inherit; /* 컨테이너의 border-radius를 상속 */
+}

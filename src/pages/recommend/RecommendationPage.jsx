@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import NavBar from '../../component/NavBar';  // 상단 메뉴바
+import NavBar from '../../component/NavBar';
 import './RecommendationPage.css';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 /* global Tmapv2 */ // Tmapv2 전역 변수 선언
-const TMAP_API = process.env.REACT_APP_TMAP_API
+const TMAP_API_KEY = process.env.REACT_APP_TMAP_API
 
 // 차로 이동 시의 거리 계산 함수
 const calculateDrivingDistance = async (startLat, startLon, endLat, endLon) => {
-    const headers = { appKey: "RodJLscILK5e9NJhSjh6ya7RWqlGMFJX9mnNIukK" };
+    const headers = { appKey: TMAP_API_KEY };
     const url = `https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result&startX=${startLon}&startY=${startLat}&endX=${endLon}&endY=${endLat}&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&startName=출발지&endName=도착지`;
 
     try {
@@ -34,7 +34,7 @@ const calculateDrivingDistance = async (startLat, startLon, endLat, endLon) => {
 
 // 주변 장소 검색 함수
 const searchPOI = async (keyword, lat, lon, mapInstance, searchRadius, markerArr, setMarkerArr, setHospitals, setDistances, searchCache, setSearchCache) => {
-    const headers = { appKey: "RodJLscILK5e9NJhSjh6ya7RWqlGMFJX9mnNIukK" };
+    const headers = { appKey: TMAP_API_KEY };
     const url = `https://apis.openapi.sk.com/tmap/pois/search/around?version=1&format=json&callback=result&categories=${encodeURIComponent(keyword)}&resCoordType=EPSG3857&searchType=name&searchtypCd=A&radius=${searchRadius}&reqCoordType=WGS84GEO&centerLon=${lon}&centerLat=${lat}&count=20`;
 
     try {
@@ -91,120 +91,126 @@ const searchPOI = async (keyword, lat, lon, mapInstance, searchRadius, markerArr
         setHospitals(newDistances.map(item => item.name));
         setDistances(newDistances.map(item => item.distance));
 
-        // 3km 이내에 병원이 없을 경우 가까운 병원 검색
-        if (newDistances.length === 0) {
-            const allPois = await fetchAllPOIs(keyword, lat, lon, mapInstance, markerArr, setMarkerArr, setSearchCache);
-            setHospitals(allPois.map(item => item.name)); // 전체 병원 목록 설정
-            setDistances(allPois.map(item => item.distance)); // 전체 병원 거리 설정
-        }
-
     } catch (error) {
         console.error("Error:", error);
     }
 };
 
-// 모든 병원 POI 검색 함수
-const fetchAllPOIs = async (keyword, lat, lon, mapInstance, markerArr, setMarkerArr, setSearchCache) => {
-    const headers = { appKey: "RodJLscILK5e9NJhSjh6ya7RWqlGMFJX9mnNIukK" };
-    const url = `https://apis.openapi.sk.com/tmap/pois/search/around?version=1&format=json&callback=result&categories=${encodeURIComponent(keyword)}&resCoordType=EPSG3857&searchType=name&searchtypCd=A&radius=100&reqCoordType=WGS84GEO&centerLon=${lon}&centerLat=${lat}&count=50`; // radius를 더 크게 설정하여 모든 병원 검색
-
-    try {
-        const response = await fetch(url, { headers });
-        const data = await response.json();
-        let resultPoisData = data.searchPoiInfo.pois.poi || [];
-        
-        const allHospitals = [];
-
-        for (let poi of resultPoisData) {
-            const pointCng = new Tmapv2.Point(Number(poi.noorLon), Number(poi.noorLat));
-            const projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(pointCng);
-            const distance = await calculateDrivingDistance(lat, lon, projectionCng._lat, projectionCng._lng);
-
-            allHospitals.push({ name: poi.name, distance: distance, lat: projectionCng._lat, lon: projectionCng._lng }); // 위도와 경도도 포함
-        }
-
-        return allHospitals;
-    } catch (error) {
-        console.error("Error fetching all POIs:", error);
-        return [];
-    }
-}
-
-function RecommendationPage({ diagnosisResult = '진단 결과 없음', recommendedDepartment = '추천 과목 없음' }) {
+function RecommendationPage() {
     const { state } = useLocation();
-    const { currentAddress } = state || {};
+    const { symptoms, address } = state || {};
     const [selectedHospital, setSelectedHospital] = useState(null);
     const [markerArr, setMarkerArr] = useState([]);
     const [hospitals, setHospitals] = useState([]);
     const [distances, setDistances] = useState([]);
+    const [recommendedDepartment, setRecommendedDepartment] = useState('');
     const [searchCache, setSearchCache] = useState({});
     const navigate = useNavigate();
     const radius = 3; // 반경을 3km로 설정
 
-    const initializeMap = useCallback(() => {
-        const mapDiv = document.getElementById('mapContainer');
-        if (mapDiv && !mapDiv.firstChild && window.Tmapv2) {
-            const mapInstance = new Tmapv2.Map("mapContainer", {
-                center: new Tmapv2.LatLng(37.5665, 126.9780),
-                width: "650px",
-                height: "500px",
-                zoom: 14
+    // 추천 과목을 받아오는 함수
+    const fetchRecommendedDepartment = useCallback(async () => {
+        try {
+            const response = await fetch('http://localhost:4000/predict/multiclass', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ symptoms }),
             });
 
-            if (currentAddress) {
-                const geocodeUrl = `https://apis.openapi.sk.com/tmap/geo/fullAddrGeo?version=1&format=json&appKey=RodJLscILK5e9NJhSjh6ya7RWqlGMFJX9mnNIukK&fullAddr=${encodeURIComponent(currentAddress)}`;
-
-                fetch(geocodeUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.coordinateInfo && data.coordinateInfo.coordinate.length > 0) {
-                            const coord = data.coordinateInfo.coordinate[0];
-                            const lat = coord.lat;
-                            const lon = coord.lon;
-
-                            mapInstance.setCenter(new Tmapv2.LatLng(lat, lon));
-
-                            new Tmapv2.Marker({
-                                position: new Tmapv2.LatLng(lat, lon),
-                                icon: "http://tmapapi.tmapmobility.com/upload/tmap/marker/pin_b_m_p.png",
-                                iconSize: new Tmapv2.Size(24, 38),
-                                map: mapInstance,
-                            });
-
-                            if (recommendedDepartment) {
-                                searchPOI(recommendedDepartment, lat, lon, mapInstance, radius, markerArr, setMarkerArr, setHospitals, setDistances, searchCache, setSearchCache);
-                            }
-                        } else {
-                            alert("환자 위치의 좌표를 찾을 수 없습니다.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("지오코딩 중 오류 발생:", error);
-                    });
-            } else {
-                console.error("환자 위치가 제공되지 않았습니다.");
-            }
-        } else if (!window.Tmapv2) {
-            console.error("Tmap API가 로드되지 않았습니다.");
+            const data = await response.json();
+            setRecommendedDepartment(data.predicted_department);
+        } catch (error) {
+            console.error('추천 진료과 가져오기 중 오류:', error);
         }
-    }, [currentAddress, recommendedDepartment, radius, markerArr, searchCache]);
+    }, [symptoms]);
 
-    useEffect(() => {
-        if (!window.Tmapv2) {
-            const script = document.createElement('script');
-            script.src = "https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=RodJLscILK5e9NJhSjh6ya7RWqlGMFJX9mnNIukK";
-            script.async = true;
-            script.onload = initializeMap;
-            document.head.appendChild(script);
+    const parts = address.split(' ');
+    
+    const city = parts[0];               // 첫 번째 부분
+    const district = parts[1];           // 두 번째 부분
+    const streetAndNumber = parts.slice(2).join(' ');  // 나머지 부분
+
+// 지도 초기화 함수 (추천 과목을 받은 후에 실행)
+const initializeMap = useCallback(() => {
+    if (!recommendedDepartment) return; // 추천 과목이 없으면 지도 초기화하지 않음
+
+    const mapDiv = document.getElementById('mapContainer');
+    if (mapDiv && !mapDiv.firstChild && window.Tmapv2) {
+        const mapInstance = new Tmapv2.Map("mapContainer", {
+            center: new Tmapv2.LatLng(37.5665, 126.9780),
+            width: "100%",
+            height: "400px",
+            zoom: 14
+        });
+
+        if (address) {
+            const geocodeUrl = `https://apis.openapi.sk.com/tmap/geo/geocoding?version=1&format=json&city_do=${encodeURIComponent(city)}&gu_gun=${encodeURIComponent(district)}&dong=${encodeURIComponent(streetAndNumber)}&addressFlag=F00&coordType=WGS84GEO&appKey=${TMAP_API_KEY}`;
+            fetch(geocodeUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.coordinateInfo && data.coordinateInfo.newLat && data.coordinateInfo.newLon) {
+                        const lat = parseFloat(data.coordinateInfo.newLat);
+                        const lon = parseFloat(data.coordinateInfo.newLon);
+                        
+                        mapInstance.setCenter(new Tmapv2.LatLng(lat, lon));
+
+                        new Tmapv2.Marker({
+                            position: new Tmapv2.LatLng(lat, lon),
+                            icon: "http://tmapapi.tmapmobility.com/upload/tmap/marker/pin_b_m_p.png",
+                            iconSize: new Tmapv2.Size(24, 38),
+                            map: mapInstance,
+                        });
+                        
+                        // 추천된 과목에 맞춰 병원 검색
+                        searchPOI(recommendedDepartment, lat, lon, mapInstance, radius, markerArr, setMarkerArr, setHospitals, setDistances, searchCache, setSearchCache);
+                    } else {
+                        alert("환자 위치의 좌표를 찾을 수 없습니다.");
+                    }
+                })
+                .catch(error => {
+                    console.error("지오코딩 중 오류 발생:", error);
+                });
         } else {
-            initializeMap();
+            console.error("환자 위치가 제공되지 않았습니다.");
         }
-    }, [initializeMap]);
+    } else if (!window.Tmapv2) {
+        console.error("Tmap API가 로드되지 않았습니다.");
+    }
+}, [address, recommendedDepartment, radius, markerArr, searchCache, setMarkerArr, setHospitals, setDistances, setSearchCache, city, district, streetAndNumber]);
+
+    // 추천 과목을 먼저 받아오고, 그 후에 지도를 초기화함
+    useEffect(() => {
+        if (symptoms) {
+            fetchRecommendedDepartment();
+        }
+    }, [fetchRecommendedDepartment, symptoms]);
+
+    // 추천 과목을 받아온 후에 지도를 초기화
+    useEffect(() => {
+        if (recommendedDepartment) {
+            if (!window.Tmapv2) {
+                const script = document.createElement('script');
+                script.src = "https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=RodJLscILK5e9NJhSjh6ya7RWqlGMFJX9mnNIukK";
+                script.async = true;
+                script.onload = initializeMap;
+                document.head.appendChild(script);
+            } else {
+                initializeMap();
+            }
+        }
+    }, [initializeMap, recommendedDepartment]);
 
     const handleHospitalClick = (hospital, marker) => {
-        setSelectedHospital(hospital);
+        if (selectedHospital === hospital) {
+            // 선택된 항목 다시 클릭 시 선택 해제
+            setSelectedHospital(null);
+          } else {
+            // 새로운 항목 선택
+            setSelectedHospital(hospital);
+          }
         // 클릭한 병원 마커를 사용자가 제공한 이미지로 변경
-        marker.setIcon("free-icon-hospital-6743757.png"); // public 폴더에 위치한 이미지 파일
+        marker.setIcon("http://tmapapi.tmapmobility.com/upload/tmap/marker/pin_b_m_p.png"); // public 폴더에 위치한 이미지 파일
         // 모든 마커를 원래 색상으로 재설정
         markerArr.forEach(m => {
             if (m !== marker) {
@@ -213,74 +219,114 @@ function RecommendationPage({ diagnosisResult = '진단 결과 없음', recommen
         });
     };
 
-    const handleSelectHospital = () => {
+    const handleSelectHospital = async () => {
         if (selectedHospital) {
-            const selectedHospitalData = hospitals.find(h => h === selectedHospital);
+            // 선택된 병원의 데이터를 가져옴
             const markerIndex = hospitals.indexOf(selectedHospital);
             const selectedMarker = markerArr[markerIndex];
-
-            if (selectedHospitalData && selectedMarker) {
-                const { lat, lon } = selectedMarker.getPosition(); // 병원의 위도와 경도
-
-                // 지도 중심을 선택된 병원으로 이동
-                const mapInstance = new Tmapv2.Map("mapContainer");
-                mapInstance.setCenter(new Tmapv2.LatLng(lat, lon));
-
-                // 선택된 병원에 마커 추가
-                new Tmapv2.Marker({
-                    position: new Tmapv2.LatLng(lat, lon),
-                    icon: "free-icon-hospital-6743757.png", // 선택된 병원 이미지로 설정
-                    iconSize: new Tmapv2.Size(24, 38),
-                    map: mapInstance,
-                });
-
-                navigate('/directions', { state: { hospital: selectedHospital } });
+    
+            if (selectedMarker) {
+                // 선택된 병원의 위도와 경도
+                const { _lat: hospitalLat, _lng: hospitalLon } = selectedMarker.getPosition();
+    
+                try {
+                    // 환자 위치 지오코딩 (위도, 경도 가져오기)
+                    const geocodeUrl = `https://apis.openapi.sk.com/tmap/geo/geocoding?version=1&format=json&city_do=${encodeURIComponent(city)}&gu_gun=${encodeURIComponent(district)}&dong=${encodeURIComponent(streetAndNumber)}&addressFlag=F00&coordType=WGS84GEO&appKey=${TMAP_API_KEY}`;
+                    const response = await fetch(geocodeUrl);
+                    const data = await response.json();
+    
+                    if (data.coordinateInfo && data.coordinateInfo.newLat && data.coordinateInfo.newLon) {
+                        const patientLat = parseFloat(data.coordinateInfo.newLat);
+                        const patientLon = parseFloat(data.coordinateInfo.newLon);
+    
+                        // 도로 기준 거리 계산
+                        const roadDistance = await calculateDrivingDistance(patientLat, patientLon, hospitalLat, hospitalLon);
+    
+                        // 지도 중심을 선택된 병원으로 이동
+                        const mapInstance = new Tmapv2.Map("mapContainer");
+                        mapInstance.setCenter(new Tmapv2.LatLng(hospitalLat, hospitalLon));
+    
+                        // 선택된 병원에 마커 추가
+                        new Tmapv2.Marker({
+                            position: new Tmapv2.LatLng(hospitalLat, hospitalLon),
+                            icon: "free-icon-hospital-6743757.png",
+                            iconSize: new Tmapv2.Size(24, 38),
+                            map: mapInstance,
+                        });
+    
+                        // 경로 안내 페이지로 이동하며 데이터 전달 (address 추가)
+                        navigate('/route/guide', {
+                            state: {
+                                patientLat,
+                                patientLon,
+                                hospitalLat,
+                                hospitalLon,
+                                roadDistance,
+                                selectedHospital,
+                                address, // 환자 위치 텍스트 추가
+                            },
+                        });
+                    } else {
+                        alert("환자 위치의 좌표를 찾을 수 없습니다.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching geocode data or calculating distance:", error);
+                }
             }
         } else {
             alert("병원을 선택해 주세요.");
         }
-    };
-
+    }; 
+    
     return (
-        <div className="recommendation-page">
-            <NavBar />
-            <h1>병원 추천</h1>
-            <div className="recommendation-container">
-                <div className="left-section">
-                <strong>추천 병원</strong>
-                    <div className="diagnosis-box">
-                        <p><strong>진단 결과:</strong> {diagnosisResult || '진단 결과 없음'}</p>
-                        <p><strong>추천 과목:</strong> {recommendedDepartment || '추천 과목 없음'}</p>
-                        <p><strong>환자 위치:</strong> {currentAddress || '위치 정보 없음'}</p>
-                    </div>
-                    <div className="map" id="mapContainer" />
+<div className="recommendation-page">
+    <NavBar />
+    <div className="recommendation-page-header">
+        <h1>진단 결과: 중증</h1>
+    </div>
+    <div className="content-container">
+        <div className="left-section">
+            <div className="diagnosis-box">
+                <div className="diagnosis-item">
+                    <span className="diagnosis-title">증상:</span>
+                    <span className="diagnosis-content">{symptoms || '증상 정보 없음'}</span>
                 </div>
-
-                <div className="right-section">
-                    <div className="hospital-list-container">
-                        <strong>추천 병원</strong>
-                        <div className="hospital-list-and-distance" style={{ overflowY: 'scroll' }}>
-                            <ul className="hospital-list">
-                                {hospitals.length > 0 ? hospitals.map((hospital, index) => (
-                                    <div key={index} className="hospital-item">
-                                        <li
-                                            className={`hospital ${selectedHospital === hospital ? 'selected' : ''}`}
-                                            onClick={() => handleHospitalClick(hospital, markerArr[index])} // 클릭 시 해당 마커를 전달
-                                        >
-                                            {hospital}
-                                        </li>
-                                        <span className="hospital-distance">
-                                            {distances[index] ? `${distances[index]} km` : '거리 계산 중...'}
-                                        </span>
-                                    </div>
-                                )) : <li>3km 이내에 병원이 없습니다. 가장 가까운 병원을 추천합니다.</li>}
-                            </ul>
-                        </div>
-                    </div>
-                    <button className="select-button" onClick={handleSelectHospital}>병원 선택</button>
+                <div className="diagnosis-item">
+                    <span className="diagnosis-title">추천 과목:</span>
+                    <span className="diagnosis-content-recommend">{recommendedDepartment || '추천 과목 없음'}</span>
+                </div>
+                <div className="diagnosis-item">
+                    <span className="diagnosis-title">환자 위치:</span>
+                    <span className="diagnosis-content">{address || '위치 정보 없음'}</span>
                 </div>
             </div>
+            <div className="map-container" id="mapContainer"></div>
         </div>
+        <div className="right-section">
+            <div className="hospital-list-container">
+                <strong>추천 병원</strong>
+                <hr className="section-divider" />
+                <div className="hospital-list-and-distance">
+                    <ul className="hospital-list">
+                        {hospitals.length > 0 ? hospitals.map((hospital, index) => (
+                        <div
+                            key={index}
+                            className={`hospital-item ${selectedHospital === hospital ? 'selected' : ''}`}
+                            onClick={() => handleHospitalClick(hospital, markerArr[index])}
+                        >
+                            <li className="hospital">{hospital}</li>
+                            <span className="hospital-distance">
+                            {distances[index] ? `${distances[index]} km` : '거리 계산 중...'}
+                            </span>
+                        </div>
+                        )) : <li>3km 이내에 병원이 없습니다. 가장 가까운 병원을 추천합니다.</li>}
+                    </ul>
+                    </div>
+            </div>
+            <button className="select-button" onClick={handleSelectHospital}>병원 선택</button>
+        </div>
+    </div>
+</div>
     );
 }
 
