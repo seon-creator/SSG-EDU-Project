@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import NavBar from '../../component/NavBar';
+import NavBar from '../../../component/NavBar';
 import './RecommendationPage.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -96,7 +96,7 @@ const searchPOI = async (keyword, lat, lon, mapInstance, searchRadius, markerArr
     }
 };
 
-function RecommendationPage() {
+function MildPage() {
     const { state } = useLocation();
     const { symptoms, address } = state || {};
     const [selectedHospital, setSelectedHospital] = useState(null);
@@ -111,7 +111,7 @@ function RecommendationPage() {
     // 추천 과목을 받아오는 함수
     const fetchRecommendedDepartment = useCallback(async () => {
         try {
-            const response = await fetch('http://localhost:4000/predict/multiclass', {
+            const response = await fetch(`${process.env.REACT_APP_FLASK_URL}/predict/multiclass`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ symptoms }),
@@ -282,7 +282,7 @@ const initializeMap = useCallback(() => {
 <div className="recommendation-page">
     <NavBar />
     <div className="recommendation-page-header">
-        <h1>진단 결과: 중증</h1>
+        <h1>진단 결과: 경증</h1>
     </div>
     <div className="content-container">
         <div className="left-section">
@@ -323,11 +323,11 @@ const initializeMap = useCallback(() => {
                     </ul>
                     </div>
             </div>
-            <button className="select-button" onClick={handleSelectHospital}>병원 선택</button>
+            <button className="hospital-select-button" onClick={handleSelectHospital}>병원 선택</button>
         </div>
     </div>
 </div>
     );
 }
 
-export default RecommendationPage;
+export default MildPage;

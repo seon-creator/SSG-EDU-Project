@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getToken } from '../utils/auth';
-import NavBar from '../component/NavBar';
+import { getToken } from '../../utils/auth';
+import NavBar from '../../component/NavBar';
 import './ReportDetailPage.css';
 
 const ReportDetailPage = () => {
@@ -15,11 +15,11 @@ const ReportDetailPage = () => {
       const token = getToken();
 
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/report/getdetail/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/report/getdetail/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'emergency-user-token': token,
+            'Authorization': `Bearer ${token}`, // Bearer 토큰 형식으로 전달
           },
         });
 

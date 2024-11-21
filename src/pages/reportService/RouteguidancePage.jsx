@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import NavBar from '../component/NavBar';
+import NavBar from '../../component/NavBar';
 import './RouteguidancePage.css';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -28,6 +28,7 @@ function RouteguidancePage() {
     const [destinationMarker, setDestinationMarker] = useState(null); // 병원 위치 마커
     const [routeLine, setRouteLine] = useState(null);    // 경로 라인
     const [estimatedTime, setEstimatedTime] = useState(null); // 예상 도착 시간
+    const [isInitialized, setIsInitialized] = useState(false); // 초기화 상태 변수
 
     // 지도 초기화 함수
     const initializeMap = useCallback(() => {
@@ -41,6 +42,7 @@ function RouteguidancePage() {
                 zoom: 14, // 초기 줌 레벨 설정
             });
             setMap(mapInstance); // 지도 인스턴스를 상태에 저장
+            setIsInitialized(true); // 초기화 상태 설정
         }
     }, [patientLat, patientLon]);
 
@@ -88,7 +90,6 @@ function RouteguidancePage() {
                     strokeOpacity: 1,
                     map: map,
                 });
-
                 setRouteLine(routePolyline);
             }
 
@@ -121,10 +122,13 @@ function RouteguidancePage() {
         }
     }, [initializeMap]);
 
-    // 경로 표시 효과
+
+    // 경로 표시
     useEffect(() => {
-        displayRoute();
-    }, [displayRoute]);
+        if (isInitialized) {
+            displayRoute();
+        }
+    }, [isInitialized, displayRoute]);
 
     // UI 렌더링
     return (
@@ -154,7 +158,7 @@ function RouteguidancePage() {
                         )}
                     </ul>
                 </div>
-                <div id="mapContainer" className="mapContainer"></div>
+                <div id="mapContainer" style={{ width: '100%', height: '500px', border: '1px solid black', marginTop: '20px' }}></div>
             </div>
         </div>
     );

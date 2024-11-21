@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../component/NavBar';
-import { getToken } from '../utils/auth';
-import { cities } from '../data/cities'; // 도시와 구 데이터 import
+import NavBar from '../../component/NavBar';
+import { getToken } from '../../utils/auth';
+import { cities } from '../../data/cities'; // 도시와 구 데이터 import
 import './ReportListPage.css';
 
 const ReportListPage = () => {
@@ -19,11 +19,11 @@ const ReportListPage = () => {
       const token = getToken();
 
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/report/getlist`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/report/getlist`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'emergency-user-token': token,
+            'Authorization': `Bearer ${token}`, // Bearer 토큰 형식으로 전달
           },
         });
 

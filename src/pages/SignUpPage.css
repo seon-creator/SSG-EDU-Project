@@ -27,34 +27,20 @@
 .signup-input-container form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
   margin-bottom: 20px;
   padding: 0 10px;
-}
-
-.signup-input-group {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  width: 100%;
-}
-
-.signup-input-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
 }
 
 .input-and-button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 5px; /* 요소 간 5px 간격 */
+  gap: 10px; /* 요소 간 5px 간격 */
 }
 
 .input-and-button input {
   flex: 8; /* 길이 비율 8 */
-  padding: 12px;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -74,13 +60,26 @@
   transition: background-color 0.3s;
 }
 
-.input-and-button button:hover {
-  background-color: #0056b3;
+.username-check-message {
+  color: #007bff;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.signup-input-container input {
+.username-check-message.error {
+  color: red;
+}
+
+.signup-input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
   width: 100%;
-  padding: 12px 12px 12px 10px;
+}
+
+.signup-input-group input {
+  padding: 12px;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -88,7 +87,40 @@
   box-sizing: border-box;
 }
 
-.signup-input-container input:focus {
+.signup-input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* 이름과 성을 묶은 컨테이너 */
+.name-fields {
+  display: flex;
+  gap: 20px; /* 이름과 성 사이 간격 */
+  width: 100%; /* 전체 너비 차지 */
+}
+
+/* 이름과 성 각각의 필드 */
+.name-field {
+  flex: 1; /* 이름과 성 필드가 1:1 비율로 설정 */
+  display: flex;
+  flex-direction: column; /* 라벨과 입력란을 세로로 정렬 */
+}
+
+.name-field label {
+  margin-bottom: 5px;
+}
+
+.name-field input {
+  padding: 12px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.name-field input:focus {
   outline: none;
   border-color: #007bff;
 }
@@ -108,15 +140,4 @@
 
 .signup-input-container button:hover {
   background-color: #0056b3;
-}
-
-.username-check-message {
-  color: #007bff;
-  font-size: 14px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.username-check-message.error {
-  color: red;
 }

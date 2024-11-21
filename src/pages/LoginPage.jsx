@@ -15,21 +15,35 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${BACKEND_URL}/auth/login`, {
+      const response = await fetch(`${BACKEND_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userid: userId, password: password }),
+        body: JSON.stringify({ userId: userId, password: password }),
       });
 
       const data = await response.json();
-      if (data.isSuccess) {
-        // 로그인 성공 시 토큰을 저장
-        setToken(data.token);
-        navigate('/enterInfo'); // 대시보드로 이동 (로그인 성공 후 페이지 이동)
+
+      if (response.ok && data.success) {
+        // 로그인 성공 시 토큰 저장 및 성공 처리
+        setToken(data.data.tokens.accessToken);
+        // role 값에 따라 다른 페이지로 이동
+        if (data.data.user.role === 'doctor') {
+          alert('로그인 성공! 환영합니다. doctor');
+          navigate('/enterInfo'); // role이 doctor이면 enterInfo로 이동
+        } // 일반 유저 로그인
+        else if (data.data.user.role === 'user') {
+          alert('로그인 성공! 환영합니다. user');
+          navigate('/'); // 기본 페이지로 이동
+        }
+        else {
+          alert('로그인 성공! 환영합니다. admin');
+          navigate('/'); // 기본 페이지로 이동
+        }
       } else {
-        alert(data.message || '로그인 실패');
+        // 로그인 실패 시 사용자에게 메시지 알림
+        alert(data.message || '아이디 또는 비밀번호를 확인해주세요.');
       }
     } catch (error) {
       console.error('로그인 중 오류 발생:', error);
@@ -39,7 +53,7 @@ const LoginPage = () => {
   
   // 회원가입 페이지로 이동하는 함수
   const handleSignup = () => {
-    navigate('/signup'); // 회원가입 페이지로 이동
+    navigate('/services'); // 회원가입 페이지로 이동
   };
 
   return (

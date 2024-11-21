@@ -14,11 +14,11 @@ function LandingPage() {
   const navigate = useNavigate(); // useNavigate 훅 사용
 
   const handleGetStarted = () => {
-    navigate('/services'); // /services 페이지로 이동
+    navigate('/login'); // /services 페이지로 이동
   };
   return (
     <div>
-        <NavBar />
+      <NavBar />
       {/* Header Section */}
       <header className="header">
       <img src={headerleftimg} alt="Medical icons" className="header-image" />

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // useNavigate import
-import { getToken } from '../utils/auth'; // For send user id
-import { cities } from '../data/cities'; // cities 데이터 import
-import NavBar from '../component/NavBar';  // 상단 메뉴바
+import { getToken } from '../../utils/auth'; // For send user id
+import { cities } from '../../data/cities'; // cities 데이터 import
+import NavBar from '../../component/NavBar';  // 상단 메뉴바
 import './EnterInfoPage.css';
 
 // 환경 변수에서 백엔드 URL 가져오기
@@ -43,11 +43,11 @@ const EnterInfoPage = () => {
     const address = `${selectedCity} ${selectedDistrict} ${details}`.trim();
   
     try {
-      const response = await fetch(`${BACKEND_URL}/report/create`, {
+      const response = await fetch(`${BACKEND_URL}/api/v1/report/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'emergency-user-token':token  // 인증 토큰
+          'Authorization': `Bearer ${token}`, // Bearer 토큰 형식으로 전달
         },
         body: JSON.stringify({
           patientLocation: address,

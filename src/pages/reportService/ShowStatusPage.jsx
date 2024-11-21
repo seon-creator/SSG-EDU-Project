@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import NavBar from '../component/NavBar';  // 상단 메뉴바
+import NavBar from '../../component/NavBar';  // 상단 메뉴바
 import './ShowStatusPage.css'; // 스타일을 위한 CSS 파일 import
 
 // 환경 변수에서 백엔드 URL 가져오기

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'; // navigate 사용
-import NavBar from '../component/NavBar';
-import { getToken } from '../utils/auth';
+import NavBar from '../../../component/NavBar';
+import { getToken } from '../../../utils/auth';
 import { useLocation } from 'react-router-dom';
 import './SeverePage.css';
 
@@ -39,11 +39,11 @@ const SeverePage = () => {
     const GetEmergencyInfo = useCallback(async () => {
         const token = getToken();
         try {
-            const response = await fetch(`${BACKEND_URL}/api/getEmergencyInfo?stage1=${city}&stage2=${district}`, {
+            const response = await fetch(`${BACKEND_URL}/api/v1/api/getEmergencyInfo?stage1=${city}&stage2=${district}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'emergency-user-token': token,
+                    'Authorization': `Bearer ${token}`, // Bearer 토큰 형식으로 전달
                 },
             });
 
