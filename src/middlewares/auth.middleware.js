@@ -7,18 +7,10 @@ class AuthMiddleware {
       if (!token) {
         return res.status(401).json({
           success: false,
-          message: "Authentication required",
+          message: "인증이 필요합니다.",
           data: null,
         });
       }
-      // const token = req.cookies.accessToken;
-      // if (!token) {
-      //   return res.status(401).json({
-      //     success: false,
-      //     message: "Authentication required",
-      //     data: null,
-      //   });
-      // }
 
       const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       req.user = decoded; // { userId, role }
@@ -26,7 +18,7 @@ class AuthMiddleware {
     } catch (error) {
       return res.status(401).json({
         success: false,
-        message: "Invalid token",
+        message: "유효하지 않은 토큰",
         data: null,
       });
     }
@@ -37,7 +29,7 @@ class AuthMiddleware {
       if (!roles.includes(req.user.role)) {
         return res.status(403).json({
           success: false,
-          message: "Insufficient permissions",
+          message: "권한이 부족합니다.",
           data: null,
         });
       }
@@ -49,7 +41,7 @@ class AuthMiddleware {
     if (req.user.role !== "admin") {
       return res.status(403).json({
         success: false,
-        message: "Admin access required",
+        message: "관리자 권한이 필요합니다.",
         data: null,
       });
     }
@@ -60,7 +52,7 @@ class AuthMiddleware {
     if (req.user.role !== "doctor") {
       return res.status(403).json({
         success: false,
-        message: "Doctor access required",
+        message: "의사 권한이 필요합니다.",
         data: null,
       });
     }

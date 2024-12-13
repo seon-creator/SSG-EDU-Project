@@ -11,5 +11,7 @@ router.get("/verify-email/:token", authController.verifyEmail);
 router.post("/forgot-password", authController.forgotPassword);
 router.post("/reset-password/:token", authController.resetPassword);
 router.post("/check-username", authController.checkUserName);
+router.post("/sendcode", authController.sendVerificationCode);  // 인증번호 전송
+router.post("/verify", authController.verifyCode);  // 인증번호 검증
 
 module.exports = router;

@@ -1,4 +1,7 @@
-const User = require("../models/user.model");
+const User = require('../models/user.model');
+const Report = require('../models/report.model');
+const mongoose = require('mongoose');
+const moment = require('moment'); // Thêm dòng này
 class AdminController {
     async getAllUsers(req, res) {
         try {
@@ -156,6 +159,154 @@ class AdminController {
             });
         }
     }
+    async getBasicStats(req, res) {
+        try {
+            // 1. Thống kê chi tiết người dùng theo role
+            const userStats = {
+                total: await User.countDocuments(),
+                users: await User.countDocuments({ role: 'user' }),
+                doctors: await User.countDocuments({ role: 'doctor' }),
+                admins: await User.countDocuments({ role: 'admin' })
+            };
+            console.log("User statistics:", userStats);
+
+            // 2. Thống kê báo cáo tai nạn
+            const now = new Date();
+            const todayStart = new Date(now.setHours(0, 0, 0, 0));
+            const weekStart = new Date(now.setDate(now.getDate() - now.getDay()));
+            const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+            // Tổng số reports và phân loại
+            const reportStats = {
+                total: await Report.countDocuments(),
+                severe: await Report.countDocuments({ isSevere: true }),
+                nonSevere: await Report.countDocuments({ isSevere: false })
+            };
+
+            // Query các reports theo thời gian và mức độ nghiêm trọng
+            const dailyStats = {
+                total: await Report.countDocuments({
+                    isCreated: {
+                        $gte: todayStart,
+                        $lte: new Date()
+                    }
+                }),
+                severe: await Report.countDocuments({
+                    isCreated: {
+                        $gte: todayStart,
+                        $lte: new Date()
+                    },
+                    isSevere: true
+                }),
+                nonSevere: await Report.countDocuments({
+                    isCreated: {
+                        $gte: todayStart,
+                        $lte: new Date()
+                    },
+                    isSevere: false
+                })
+            };
+
+            const weeklyStats = {
+                total: await Report.countDocuments({
+                    isCreated: {
+                        $gte: weekStart,
+                        $lte: new Date()
+                    }
+                }),
+                severe: await Report.countDocuments({
+                    isCreated: {
+                        $gte: weekStart,
+                        $lte: new Date()
+                    },
+                    isSevere: true
+                }),
+                nonSevere: await Report.countDocuments({
+                    isCreated: {
+                        $gte: weekStart,
+                        $lte: new Date()
+                    },
+                    isSevere: false
+                })
+            };
+
+            const monthlyStats = {
+                total: await Report.countDocuments({
+                    isCreated: {
+                        $gte: monthStart,
+                        $lte: new Date()
+                    }
+                }),
+                severe: await Report.countDocuments({
+                    isCreated: {
+                        $gte: monthStart,
+                        $lte: new Date()
+                    },
+                    isSevere: true
+                }),
+                nonSevere: await Report.countDocuments({
+                    isCreated: {
+                        $gte: monthStart,
+                        $lte: new Date()
+                    },
+                    isSevere: false
+                })
+            };
+
+            // 3. Số phiên chat đang hoạt động
+            const chatCollection = mongoose.connection.db.collection('chat_sessions');
+            const activeChats = await chatCollection.countDocuments({
+                end_time: null
+            });
+
+            return res.status(200).json({
+                success: true,
+                data: {
+                    users: {
+                        total: userStats.total,
+                        byRole: {
+                            users: userStats.users,
+                            doctors: userStats.doctors,
+                            admins: userStats.admins
+                        }
+                    },
+                    reports: {
+                        overall: {
+                            total: reportStats.total,
+                            severe: reportStats.severe,
+                            nonSevere: reportStats.nonSevere
+                        },
+                        daily: {
+                            total: dailyStats.total,
+                            severe: dailyStats.severe,
+                            nonSevere: dailyStats.nonSevere
+                        },
+                        weekly: {
+                            total: weeklyStats.total,
+                            severe: weeklyStats.severe,
+                            nonSevere: weeklyStats.nonSevere
+                        },
+                        monthly: {
+                            total: monthlyStats.total,
+                            severe: monthlyStats.severe,
+                            nonSevere: monthlyStats.nonSevere
+                        }
+                    },
+                    activeChats: activeChats
+                },
+                timestamp: new Date()
+            });
+
+        } catch (error) {
+            console.error('Error in getBasicStats:', error);
+            return res.status(500).json({
+                success: false,
+                message: 'Internal server error',
+                error: error.message
+            });
+        }
+    }
 }
+
 
 module.exports = new AdminController();

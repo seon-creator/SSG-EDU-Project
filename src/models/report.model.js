@@ -24,6 +24,12 @@ const reportSchema = new mongoose.Schema({
   isSevere: {
     // 중증 여부
     type: Boolean,
+    default: false,
+    required: false,
+  },
+  estimatedTime: {
+    // 소요시간 (분 단위)
+    type: Number,
     required: false,
   },
   isCreated: {

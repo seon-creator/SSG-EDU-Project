@@ -78,3 +78,74 @@ exports.getReportDetails = async (req, res) => {
     res.status(500).json({ message: '서버 오류가 발생했습니다.' });
   }
 };
+
+// 중증일때 상태 업데이트
+exports.updateSevere = async (req, res) => {
+  const { address, symptoms } = req.body;
+
+  try {
+    // 주소와 증상으로 report 찾기
+    const report = await Report.findOneAndUpdate(
+      { patientLocation: address, symptom: symptoms },
+      { isSevere: true }, // isSevere 값을 true로 업데이트
+      { new: true } // 업데이트 후 변경된 데이터를 반환
+    );
+
+    if (!report) {
+      return res.status(404).json({ message: '해당 신고를 찾을 수 없습니다.' });
+    }
+
+    res.status(200).json({ message: 'Report가 성공적으로 업데이트되었습니다.', report });
+  } catch (error) {
+    console.error('Report 업데이트 중 오류 발생:', error);
+    res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+  }
+};
+
+exports.updateDestination = async (req, res) => {
+  const { address, symptoms, destination } = req.body;
+
+  try {
+    // address와 symptoms를 기준으로 report 찾기
+    const report = await Report.findOneAndUpdate(
+      { patientLocation: address, symptom: symptoms },
+      { destination: destination }, // 선택된 병원의 이름을 destination으로 설정
+      { new: true } // 업데이트 후 변경된 데이터를 반환
+    );
+
+    if (!report) {
+      return res.status(404).json({ message: '해당 신고를 찾을 수 없습니다.' });
+    }
+
+    res.status(200).json({ message: 'Report가 성공적으로 업데이트되었습니다.', report });
+  } catch (error) {
+    console.error('Report 업데이트 중 오류 발생:', error);
+    res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+  }
+};
+
+exports.updateReport = async (req, res) => {
+  const { symptom, isSevere } = req.body; // 클라이언트에서 보낸 데이터
+  const { id } = req.params; // URL에서 ID 가져오기
+
+  try {
+    // ID로 Report 찾기 및 업데이트
+    const report = await Report.findByIdAndUpdate(
+      id, // 찾을 조건
+      { symptom, isSevere }, // 업데이트할 데이터
+      { new: true } // 업데이트된 데이터를 반환
+    );
+
+    if (!report) {
+      return res.status(404).json({ message: '해당 Report를 찾을 수 없습니다.' });
+    }
+
+    res.status(200).json({
+      message: 'Report가 성공적으로 업데이트되었습니다.',
+      updatedReport: report,
+    });
+  } catch (error) {
+    console.error('Report 업데이트 중 오류 발생:', error);
+    res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+  }
+};

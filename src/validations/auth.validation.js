@@ -3,29 +3,29 @@ const { body } = require('express-validator');
 const registerValidation = [
     body('email')
         .isEmail()
-        .withMessage('Please enter a valid email'),
+        .withMessage('유효한 이메일을 입력해 주세요'),
     body('password')
         .isLength({ min: 8 })
-        .withMessage('Password must be at least 8 characters long'),
+        .withMessage('비밀번호는 최소 8자 이상이어야 합니다'),
     body('firstName')
         .notEmpty()
-        .withMessage('First name is required'),
+        .withMessage('이름은 필수입니다'),
     body('lastName')
         .notEmpty()
-        .withMessage('Last name is required'),
+        .withMessage('성은 필수입니다'),
     body('role')
         .optional()
         .isIn(['user', 'doctor', 'admin'])
-        .withMessage('Invalid role')
+        .withMessage('유효하지 않은 역할입니다')
 ];
 
 const loginValidation = [
     body('email')
         .isEmail()
-        .withMessage('Please enter a valid email'),
+        .withMessage('유효한 이메일을 입력해 주세요'),
     body('password')
         .notEmpty()
-        .withMessage('Password is required')
+        .withMessage('비밀번호는 필수입니다')
 ];
 
 module.exports = {

@@ -5,20 +5,20 @@ const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      required: [true, "Email is required"],
+      required: [true, "이메일은 필수입니다"],
       unique: true,
       lowercase: true,
       trim: true,
       validate: {
         validator: (email) =>
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email),
-        message: "Invalid email format",
+        message: "유효하지 않은 이메일 형식입니다",
       },
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
-      minLength: [8, "Password must be at least 8 characters"],
+      required: [true, "비밀번호는 필수입니다"],
+      minLength: [8, "비밀번호는 최소 8자 이상이어야 합니다"],
       select: false,
     },
     userId: {
@@ -27,12 +27,12 @@ const userSchema = new mongoose.Schema(
     },
     firstName: {
       type: String,
-      required: [true, "First name is required"],
+      required: [true, "이름은 필수입니다"],
       trim: true,
     },
     lastName: {
       type: String,
-      required: [true, "Last name is required"],
+      required: [true, "성은 필수입니다"],
       trim: true,
     },
     dateOfBirth: {
@@ -44,11 +44,11 @@ const userSchema = new mongoose.Schema(
     },
     height: {
       type: Number,
-      min: [0, "Height must be greater than 0"],
+      min: [0, "키는 0보다 커야 합니다"],
     },
     weight: {
       type: Number,
-      min: [0, "Weight must be greater than 0"],
+      min: [0, "몸무게는 0보다 커야 합니다"],
     },
     bloodGroup: {
       type: String,
@@ -86,12 +86,12 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Virtual for full name
+// 전체 이름에 대한 가상 필드
 userSchema.virtual("fullName").get(function () {
   return `${this.lastName} ${this.firstName}`;
 });
 
-// Hash password before saving
+// 저장하기 전에 비밀번호 해시
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
@@ -104,7 +104,7 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-// Compare password method
+// 비밀번호 비교 메서드
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
