@@ -12,7 +12,7 @@ from langchain.embeddings import HuggingFaceEmbeddings
 class KnowledgeBaseService:
     def __init__(self):
         try:
-            # self.embeddings = OpenAIEmbeddings(api_key='')
+           
             self.embeddings = HuggingFaceEmbeddings(
                 model_name="sentence-transformers/all-MiniLM-L6-v2"
                 )

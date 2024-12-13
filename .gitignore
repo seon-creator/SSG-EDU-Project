@@ -3,5 +3,14 @@ __pycache__/
 *.pyc
 .env
 .DS_Store
+
+# chroma db
 knowledge_base/chroma_db/
 knowledge_base/pdfs
+
+test.ipynb
+
+# Model
+app/models/classify_multiple_model.h5
+app/models/classify_severe_model.h5
+app/models/xgboost_model.pkl
