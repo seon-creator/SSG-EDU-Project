@@ -10,7 +10,7 @@ function ChooseServicePage() {
 
     const handleServiceClick = (role) => {
         // role에 따라 /signup으로 이동하며 role 전달
-        navigate(`/signup?role=${role}`);
+        navigate(`/login?role=${role}`);
     };
 
     return (
@@ -26,7 +26,7 @@ function ChooseServicePage() {
                         • GPT 연동 챗봇 서비스
                     </p>
                     <button 
-                        className="join-button" 
+                        className="join-button"
                         onClick={() => handleServiceClick('user')}
                     >
                         시작하기

@@ -1,8 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';  // 페이지 이동 모듈
-import NavBar from '../component/NavBar';
-import headerrightimg from '../assets/images/paramedic.png'
-import headerleftimg from '../assets/images/headerdiagnosis.png'
+import headerrightimg from '../assets/images/background.png'
 
 import chatbot from '../assets/images/chatbot.png';
 import classify from '../assets/images/classify.png';
@@ -14,14 +12,12 @@ function LandingPage() {
   const navigate = useNavigate(); // useNavigate 훅 사용
 
   const handleGetStarted = () => {
-    navigate('/login'); // /services 페이지로 이동
+    navigate('/services'); // /services 페이지로 이동
   };
   return (
-    <div>
-      <NavBar />
+    <div className="landing-page">
       {/* Header Section */}
       <header className="header">
-      <img src={headerleftimg} alt="Medical icons" className="header-image" />
         <div className="description">
           <h2>종합 응급 의료 도우미</h2>
           <p>
@@ -34,7 +30,9 @@ function LandingPage() {
             <strong>무료로 시작하기</strong>
           </button>
         </div>
-        <img src={headerrightimg} alt="Medical icons" className="header-image" />
+        <div className="header-image-container">
+      <img src={headerrightimg} alt="Paramedic illustration" className="header-image" />
+      </div>
       </header>
 
       {/* Service Features Section */}

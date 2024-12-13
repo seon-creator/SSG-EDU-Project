@@ -1,81 +1,125 @@
 .report-list-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .report-list-container {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 100%;
-  }
-  
-  .filter-section {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .sort-buttons {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-  }
-  
-  .sort-buttons button {
-    padding: 8px 16px;
-    font-size: 16px;
-    color: #333;
-    background-color: #f1f1f1;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .sort-buttons button.active {
-    background-color: #ddd;
-    font-weight: bold;
-  }
-  
-  .sort-buttons button:hover {
-    background-color: #e1e1e1;
-  }
-  
-  .city-district-filters label {
-    margin-right: 8px;
-  }
-  
-  .city-district-filters select {
-    padding: 8px;
-    margin-right: 16px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-  }
-  
-  .report-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  
-  .report-card {
-    background-color: #f9f9f9;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .report-card:hover {
-    transform: translateY(-4px);
-  }
-  
-  .report-card p {
-    margin: 8px 0;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background-color: #f0f8ff;
+  margin-top: 80px; /* NavBar 높이와 일치시켜서 밀어내기 */
+}
+
+.report-list-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  max-height: 800px;
+  width: 100%;
+  margin-top: 50px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  /* Firefox용 */
+  scrollbar-color: transparent transparent;
+  /* 비활성 상태의 스크롤바 색상 */
+  transition: scrollbar-color 0.3s ease;
+  /* 전환 효과 */
+}
+
+/* 마우스 오버 시 스크롤바 활성화 */
+.report-list-container:hover {
+  scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.1);
+  /* 활성화된 스크롤바 색상 */
+}
+
+/* 크롬 및 엣지 브라우저용 스크롤바 설정 */
+.report-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.report-list-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  /* 기본 상태에서는 투명 */
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  /* 전환 효과 */
+}
+
+.report-list-container:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+  /* 마우스 오버 시 스크롤바 색상 */
+}
+
+.filter-section {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  /* 필터와 리스트 사이 구분선 */
+  background-color: #ffffff;
+  flex-shrink: 0;
+  /* 크기가 줄어들지 않도록 고정 */
+}
+
+.sort-buttons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.sort-buttons button {
+  padding: 8px 16px;
+  font-size: 16px;
+  color: #333;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sort-buttons button.active {
+  background-color: #ddd;
+  font-weight: bold;
+}
+
+.sort-buttons button:hover {
+  background-color: #e1e1e1;
+}
+
+.city-district-filters label {
+  margin-right: 8px;
+}
+
+.city-district-filters select {
+  padding: 8px;
+  margin-right: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.report-list {
+  flex: 1;
+  /* 남은 공간을 모두 차지 */
+  overflow-y: auto;
+  /* 리스트 내부 스크롤 활성화 */
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.report-card {
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.report-card:hover {
+  transform: translateY(-4px);
+}
+
+.report-card p {
+  margin: 8px 0;
+}

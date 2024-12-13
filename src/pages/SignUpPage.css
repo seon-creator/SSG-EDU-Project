@@ -36,11 +36,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px; /* 요소 간 5px 간격 */
+  gap: 10px;
+  /* 요소 간 5px 간격 */
 }
 
 .input-and-button input {
-  flex: 8; /* 길이 비율 8 */
+  flex: 8;
+  /* 길이 비율 8 */
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -49,7 +51,8 @@
 }
 
 .input-and-button button {
-  flex: 2; /* 길이 비율 2 */
+  flex: 2;
+  /* 길이 비율 2 */
   padding: 12px;
   background-color: #007bff;
   color: white;
@@ -96,15 +99,19 @@
 /* 이름과 성을 묶은 컨테이너 */
 .name-fields {
   display: flex;
-  gap: 20px; /* 이름과 성 사이 간격 */
-  width: 100%; /* 전체 너비 차지 */
+  gap: 20px;
+  /* 이름과 성 사이 간격 */
+  width: 100%;
+  /* 전체 너비 차지 */
 }
 
 /* 이름과 성 각각의 필드 */
 .name-field {
-  flex: 1; /* 이름과 성 필드가 1:1 비율로 설정 */
+  flex: 1;
+  /* 이름과 성 필드가 1:1 비율로 설정 */
   display: flex;
-  flex-direction: column; /* 라벨과 입력란을 세로로 정렬 */
+  flex-direction: column;
+  /* 라벨과 입력란을 세로로 정렬 */
 }
 
 .name-field label {
@@ -140,4 +147,274 @@
 
 .signup-input-container button:hover {
   background-color: #0056b3;
+}
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  animation: slideIn 0.3s ease-out;
+}
+
+.popup-icon {
+  width: 60px;
+  height: 60px;
+  background-color: #28a745;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px;
+  color: white;
+  font-size: 30px;
+  animation: scaleIn 0.3s ease-out;
+}
+
+.popup-content h2 {
+  color: #28a745;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+/* Tiếp tục từ phần trước */
+.popup-content p {
+  color: #666;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.popup-confirm-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.popup-confirm-button:hover {
+  background-color: #218838;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .signup-input-container {
+    padding: 20px;
+  }
+
+  .name-fields {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .popup-content {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .popup-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+
+  .popup-content h2 {
+    font-size: 20px;
+  }
+
+  .popup-confirm-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Additional hover effects */
+.signup-input-group input:hover {
+  border-color: #b3b3b3;
+}
+
+.popup-overlay:hover {
+  cursor: pointer;
+}
+
+.popup-content:hover {
+  cursor: default;
+}
+
+/* Focus styles for better accessibility */
+.popup-confirm-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+}
+
+input:focus {
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Loading animation for buttons */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.submit-button.loading,
+.check-button.loading {
+  animation: pulse 1.5s infinite;
+}
+
+/* Error shake animation */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.form-message.error {
+  animation: shake 0.6s;
+}
+
+/* Success message fade in */
+@keyframes successFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-message.success {
+  animation: successFade 0.3s ease-out;
+}
+
+/* Disable styles */
+input:disabled,
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Print styles */
+@media print {
+  .signup-container {
+    background: none;
+    padding: 0;
+  }
+
+  .popup-overlay {
+    display: none;
+  }
+
+  .submit-button,
+  .check-button {
+    display: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .signup-input-container {
+    border: 2px solid #000;
+  }
+
+  input {
+    border: 2px solid #000;
+  }
+
+  .submit-button,
+  .check-button,
+  .popup-confirm-button {
+    border: 2px solid #000;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }

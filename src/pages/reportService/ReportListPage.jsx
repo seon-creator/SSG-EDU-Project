@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../../component/NavBar';
 import { getToken } from '../../utils/auth';
 import { cities } from '../../data/cities'; // 도시와 구 데이터 import
 import './ReportListPage.css';
@@ -82,8 +81,6 @@ const ReportListPage = () => {
 
   return (
     <div>
-      <NavBar />
-      <h1>신고 목록</h1>
       <div className="report-list-page">
         <div className="report-list-container">
           <div className="filter-section">
@@ -112,7 +109,11 @@ const ReportListPage = () => {
               </select>
 
               <label>구: </label>
-              <select value={selectedDistrict} onChange={handleDistrictChange} disabled={selectedCity === '전체'}>
+              <select
+                value={selectedDistrict}
+                onChange={handleDistrictChange}
+                disabled={selectedCity === '전체'}
+              >
                 <option value="전체">전체</option>
                 {selectedCity !== '전체' &&
                   cities[selectedCity].map((district) => (
@@ -123,13 +124,13 @@ const ReportListPage = () => {
           </div>
           <div className="report-list">
             {filteredReports.map((report) => (
-              <div 
-                  key={report._id} 
-                  className="report-card"
-                  onClick={() => handleReportClick(report._id)}
-                >
-                <p>주소: {report.patientLocation}</p> {/* 신고 주소 */}
-                <p>증상: {report.symptom}...</p> {/* 증상 표시 */}
+              <div
+                key={report._id}
+                className="report-card"
+                onClick={() => handleReportClick(report._id)}
+              >
+                <p>주소: {report.patientLocation}</p>
+                <p>증상: {report.symptom}...</p>
                 <p>신고일시: {new Date(report.isCreated).toLocaleString()}</p>
               </div>
             ))}

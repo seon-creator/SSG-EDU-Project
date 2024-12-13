@@ -19,3 +19,5 @@ utils: JWT토큰 관련, 보안관리
     - ProtectedRoute.jsx: 로그인한 상태에서만 접속 가능하게 하는 보호 기능
 
 App.js: 프론트엔드 전 페이지 관리
+
+npm i react-toastify @mui/icons-material @mui/material remark-gfm react-markdown

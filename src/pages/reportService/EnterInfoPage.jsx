@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // useNavigate import
 import { getToken } from '../../utils/auth'; // For send user id
 import { cities } from '../../data/cities'; // cities 데이터 import
-import NavBar from '../../component/NavBar';  // 상단 메뉴바
 import './EnterInfoPage.css';
 
 // 환경 변수에서 백엔드 URL 가져오기
@@ -39,9 +38,9 @@ const EnterInfoPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const token = getToken();
-  
+
     const address = `${selectedCity} ${selectedDistrict} ${details}`.trim();
-  
+
     try {
       const response = await fetch(`${BACKEND_URL}/api/v1/report/create`, {
         method: 'POST',
@@ -54,7 +53,7 @@ const EnterInfoPage = () => {
           symptom: symptoms,
         }),
       });
-  
+
       const data = await response.json();
       if (response.ok) {
         alert('Report가 성공적으로 생성되었습니다.');
@@ -69,72 +68,71 @@ const EnterInfoPage = () => {
   };
 
   return (
-    <div>
-      <NavBar />
-    <div className="EnterInfo-container">
-      {/* NavBar 추가 */}
-      <div className="EnterInfo-content">
-        <h1 className="EnterInfo-content-title">신속한 환자 상태 분류 및 병원 추천</h1>
+    <div className='EnterInfo-Page'>
 
-        <form className="patient-info-form" onSubmit={handleSubmit}>
-          <div className="address-group">
+      <div className="EnterInfo-container">
+        <div className="EnterInfo-content">
+          <h1 className="EnterInfo-content-title">신속한 환자 상태 분류 및 병원 추천</h1>
 
-            <div className="city-input-pair">
-              <label htmlFor="city">도시</label>
-              <select id="city" value={selectedCity} onChange={handleCityChange}>
-                <option value="">도시 선택</option>
-                {Object.keys(cities).map((city) => (
-                  <option key={city} value={city}>{city}</option>
-                ))}
-              </select>
+          <form className="patient-info-form" onSubmit={handleSubmit}>
+            <div className="address-group">
+
+              <div className="city-input-pair">
+                <label htmlFor="city">도시</label>
+                <select id="city" value={selectedCity} onChange={handleCityChange}>
+                  <option value="">도시 선택</option>
+                  {Object.keys(cities).map((city) => (
+                    <option key={city} value={city}>{city}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="dis-input-pair">
+                <label htmlFor="district">구</label>
+                <select
+                  id="district"
+                  value={selectedDistrict}
+                  onChange={handleDistrictChange}
+                  disabled={!selectedCity}
+                >
+                  <option value="">구 선택</option>
+                  {districts.map((district) => (
+                    <option key={district} value={district}>{district}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="detail-input-pair">
+                <label htmlFor="details">세부주소</label>
+                <input
+                  type="text"
+                  id="details"
+                  placeholder="세부 주소 입력"
+                  value={details}
+                  onChange={(e) => setDetails(e.target.value)}
+                />
+              </div>
             </div>
 
-            <div className="dis-input-pair">
-              <label htmlFor="district">구</label>
-              <select
-                id="district"
-                value={selectedDistrict}
-                onChange={handleDistrictChange}
-                disabled={!selectedCity}
-              >
-                <option value="">구 선택</option>
-                {districts.map((district) => (
-                  <option key={district} value={district}>{district}</option>
-                ))}
-              </select>
+            <div className="symptoms-input-group">
+              <label htmlFor="symptoms">환자증상:</label>
+              <textarea
+                id="symptoms"
+                rows="4"
+                placeholder="증상 입력"
+                value={symptoms}
+                onChange={(e) => setSymptoms(e.target.value)}></textarea>
             </div>
 
-            <div className="detail-input-pair">
-              <label htmlFor="details">세부주소</label>
-              <input
-                type="text"
-                id="details"
-                placeholder="세부 주소 입력"
-                value={details}
-                onChange={(e) => setDetails(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className="symptoms-input-group">
-            <label htmlFor="symptoms">환자증상:</label>
-            <textarea
-              id="symptoms"
-              rows="4"
-              placeholder="증상 입력"
-              value={symptoms}
-              onChange={(e) => setSymptoms(e.target.value)}></textarea>
-          </div>
-
-          <button 
-            type="submit" 
-            className={`btn submit-btn ${!isFormValid ? 'disabled' : ''}`}
-            disabled={!isFormValid}
+            <button
+              type="submit"
+              className={`btn submit-btn ${!isFormValid ? 'disabled' : ''}`}
+              disabled={!isFormValid}
             >정보 등록</button>
-        </form>
+          </form>
 
+        </div>
       </div>
-    </div>
     </div>
   );
 };

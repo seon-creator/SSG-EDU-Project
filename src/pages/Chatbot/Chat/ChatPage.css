@@ -1,0 +1,127 @@
+/* pages/ChatPage.css */
+.chat-page {
+    height: 100vh;
+    margin-top: 10px; /* NavBar 높이와 일치시켜서 밀어내기 */
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+}
+
+.mobile-header {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    height: 56px;
+}
+
+.chat-content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    height: calc(100vh - 56px);
+    /* Trừ đi chiều cao của mobile header */
+}
+
+.button[type="submit"] {
+    width: 5%;
+}
+
+.sessions-sidebar {
+    width: 300px;
+    border-right: 1px solid #e0e0e0;
+    background-color: #fff;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-drawer {
+    width: 100%;
+    max-width: 300px;
+}
+
+.mobile-drawer-content {
+    width: 100%;
+    height: 100%;
+}
+
+.main-chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.chat-area-container {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.back-button {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 1000;
+}
+
+.chat-placeholder {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa;
+}
+
+.placeholder-content {
+    text-align: center;
+    padding: 24px;
+}
+
+.placeholder-image {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 24px;
+    opacity: 0.7;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .sessions-sidebar {
+        display: none;
+    }
+
+    .placeholder-image {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

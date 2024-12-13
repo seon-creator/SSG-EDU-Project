@@ -1,0 +1,18 @@
+/* src/pages/Admin/DashboardPage.css */
+.loading-container,
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.dashboard-container {
+    padding-top: 60px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.charts-container {
+    margin-top: 16px;
+}

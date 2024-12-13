@@ -2,11 +2,14 @@
 .recommendation-page {
   display: flex;
   flex-direction: column;
+  margin-top:20px;
   align-items: center;
   background-color: #f0f8ff;
   height: 100vh;
   overflow: hidden;
-  padding-bottom: 20px; /* 아래 여백 추가 */
+  padding-top: 60px;
+  padding-bottom: 20px;
+  /* 아래 여백 추가 */
 }
 
 .recommendation-page-header h1 {
@@ -21,7 +24,8 @@
   justify-content: space-between;
   width: 100%;
   max-width: 1200px;
-  height: calc(100vh - 120px); /* 추가된 여백 반영 */
+  height: calc(100vh - 120px);
+  /* 추가된 여백 반영 */
   gap: 20px;
 }
 
@@ -117,7 +121,8 @@
   justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid #ddd;
-  transition: background-color 0.3s; /* 부드러운 전환 효과 */
+  transition: background-color 0.3s;
+  /* 부드러운 전환 효과 */
 }
 
 .hospital-item:hover {
@@ -126,7 +131,8 @@
 }
 
 .hospital-item.selected {
-  background: #e0f7fa; /* 클릭된 상태의 색상 */
+  background: #e0f7fa;
+  /* 클릭된 상태의 색상 */
 }
 
 .hospital-distance {
@@ -137,12 +143,15 @@
 /* 병원 선택 버튼 스타일 */
 .hospital-select-button {
   align-self: flex-end;
-  padding: 10px 25px; /* 버튼 크기 키우기 */
-  font-size: 15px; /* 텍스트 크기 키우기 */
+  padding: 10px 25px;
+  /* 버튼 크기 키우기 */
+  font-size: 15px;
+  /* 텍스트 크기 키우기 */
   color: white;
   background-color: #007bff;
   border: none;
-  border-radius: 10px; /* 둥근 모서리 */
+  border-radius: 10px;
+  /* 둥근 모서리 */
   cursor: pointer;
   font-weight: bold;
   text-decoration: none;
@@ -150,5 +159,6 @@
 }
 
 .hospital-select-button:hover {
-  background-color: #0056b3; /* hover 효과 */
+  background-color: #0056b3;
+  /* hover 효과 */
 }

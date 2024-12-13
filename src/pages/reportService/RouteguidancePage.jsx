@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import NavBar from '../../component/NavBar';
 import './RouteguidancePage.css';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
-
+import { flaskApi } from '../../utils/api';
 /* global Tmapv2 */ // Tmapv2 전역 변수 선언 (Tmap API 사용)
 const TMAP_API_KEY = process.env.REACT_APP_TMAP_API; // 환경 변수에서 Tmap API 키 가져오기
 const FLASK_URL = process.env.REACT_APP_FLASK_URL;
@@ -94,14 +92,39 @@ function RouteguidancePage() {
             }
 
             // Flask 서버에 예상 도착 시간 요청
+            // console.log("환자 위치", patientLat, patientLon);
+            // console.log("병원 위치", hospitalLat, hospitalLon);
+            // console.log("도로 기준 거리", roadDistance);
             try {
-                const response = await axios.post(`${FLASK_URL}/predict/calculate_time`, {
+
+                const response = await flaskApi.post('/predict/calculate_time', {
                     startLat: patientLat,
                     startLon: patientLon,
                     distance: roadDistance,
                 });
+                // console.log(response);
+
+
+                // const response = await fetch(`${FLASK_URL}/predict/calculate_time`, {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //         'Authorization': `Bearer ${token}`, // Bearer 토큰 형식으로 전달
+                //     },
+                //     body: JSON.stringify({
+                //         startLat: patientLat,
+                //         startLon: patientLon,
+                //         distance: roadDistance,
+                //     }),
+                // });
+
+                if (response.status !== 200) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = response.data;
                 // 서버에서 반환된 예상 도착 시간을 상태에 저장
-                setEstimatedTime(response.data.estimated_time);
+                setEstimatedTime(data.estimated_time);
             } catch (error) {
                 console.error("Error fetching estimated time from Flask API:", error);
             }
@@ -133,9 +156,8 @@ function RouteguidancePage() {
     // UI 렌더링
     return (
         <div className="Routeguidance-Page">
-            <NavBar />
             <div className="Route-guidance-container">
-            <h1>경로 및 소요시간 안내</h1>
+                <h1>경로 및 소요시간 안내</h1>
                 <div className="info-box">
                     <ul>
                         <li>

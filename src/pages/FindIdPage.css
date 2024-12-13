@@ -1,0 +1,85 @@
+/* FindUserId.css */
+.body, html {
+  background-color: #f0f8ff;
+}
+
+.FindId-Page {
+  background-color: #f0f8ff;
+}
+
+.find-id-container {
+    max-width: 500px;
+    margin: 114px auto 50px; /* Adds 64px to the top margin */
+    padding: 20px;
+    background-color: #ffffff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .find-id-container h2 {
+    color: #333; /* Darker text for title */
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .find-id-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Add spacing between inputs */
+  }
+  
+  .find-id-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .find-id-input-group label {
+    font-size: 14px;
+    color: #555; /* Slightly muted label color */
+    margin-bottom: 5px;
+  }
+  
+  .find-id-input-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .find-id-input-group input:focus {
+    border-color: #007bff; /* Blue focus border */
+    outline: none;
+  }
+  
+  .find-id-submit-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff; /* White text */
+    background-color: #007bff; /* Blue button */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .find-id-submit-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .find-id-message {
+    margin-top: 20px;
+    font-size: 16px;
+  }
+  
+  .find-id-message.success {
+    color: green;
+  }
+  
+  .find-id-message.error {
+    color: red;
+  }

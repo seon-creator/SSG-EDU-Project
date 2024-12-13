@@ -1,6 +1,6 @@
-body {
-  margin: 0;
-  padding: 0;
+.EnterInfo-Page {
+  background-color: #f0f8ff;
+  margin-top: 80px; /* NavBar 높이와 일치시켜서 밀어내기 */
 }
 
 .EnterInfo-container {
@@ -15,7 +15,7 @@ body {
   padding: 50px;
   border-radius: 10px;  /* 모서리 부분 둥글게 */
   max-height: 700px;
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 2px solid #ddd; /* Add border with color */

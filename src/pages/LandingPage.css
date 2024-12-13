@@ -1,3 +1,11 @@
+/* 메뉴바 아래로 본문 내용 밀기 */
+.landing-page {
+  min-height: 100vh; /* 화면 높이를 최소한으로 채움 */
+  margin-top: 80px; /* NavBar 높이와 일치시켜서 밀어내기 */
+  background-color: #f0f8ff;
+}
+
+/* 전체 레이아웃 */
 .landing-container {
   display: flex;
   justify-content: center;
@@ -8,21 +16,36 @@
 .header {
   display: flex;
   align-items: center;
-  /* padding: 20px; */
   width: 100%;
-  background-color: white;
+  height: 500px;
+  background-color: #d7eafb;
   border-bottom: 2px solid #cbd1d9;
   overflow: hidden;
 }
 
-.header-image {
+.header-image-container {
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-image {
+  max-width: 600px;
   height: auto;
-  /* background-color: white; */
-  max-width: 220px;
-  padding: 100px;
-  object-fit: cover;
-  margin:0 60px;
+  border-radius: 100px;
+  margin-right: 50px;
+  overflow: hidden;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  padding: 20px;
 }
 
 .description {
@@ -30,11 +53,16 @@
   text-align: center;
   font-size: 25px;
   color: #333333;
-  padding: 20px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-radius: 50px;
+  background: white;
+  margin-left: 150px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .description h2 {
-  font-size: 60px;
+  font-size: 50px;
   margin-bottom: 20px;
   color: #222222;
 }
@@ -43,11 +71,10 @@
   line-height: 1.5;
 }
 
-/* 시작하기 버튼 디자인 */
 .get-started-button {
   margin-top: 5px;
-  padding: 20px 80px;
-  font-size: 30px;
+  padding: 15px 60px;
+  font-size: 25px;
   color: white;
   background-color: #007bff;
   border: none;
@@ -55,48 +82,46 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
-/* 시작하기 버튼 마우스 커서 색 변화효과 */
+
 .get-started-button:hover {
   background-color: #0056b3;
 }
 
+/* Features Section */
 .features {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
+  justify-content: center;
+  flex-wrap: wrap; /* 가로로 정렬하며 필요 시 줄바꿈 */
+  gap: 40px;
+  padding: 40px;
   background-color: #f0f8ff;
 }
 
 .feature {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  height: 150px;
-  width: 100%;
-  max-width: 40%; /* Set feature width to half of the container */
-  padding: 40px;
+  justify-content: center;
+  width: 20%; /* 가로로 4개 정렬 */
+  padding: 20px;
   border-radius: 8px;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .feature-image {
-  width: 120px;
-  height: 120px;
-  margin-right: 40px;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
 }
 
 .feature-text {
-  text-align: left;
-  width: 100%;
-  padding: 20px;
-  font-size: 18px;
-  border-color: black;
-  border-radius: 8px;
-  background-color: #f9f9f9; /* 항목 배경색 추가 */
+  font-size: 16px;
+  color: #333333;
 }
 
 .feature-text h3 {
   font-weight: 900;
+  margin-bottom: 10px;
 }
